@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "callback": "node ./teorico/src/callbacks/challenge.js"
   },
-  "keywords": [
-    "JavaScript"
-  ],
+  "keywords": ["JavaScript", "callbacks", "js", "asincronia"],
   "author": "Juan Vidal",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "xmlhttprequest": "^1.8.0"
+  }
 }
