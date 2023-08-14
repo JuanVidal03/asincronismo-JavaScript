@@ -1,14 +1,14 @@
-#Asincronismo con JavaScript - Juan Vidal
+# Asincronismo con JavaScript - Juan Vidal
 
 En este repositorio se encuentra información relacionada con el asincronismo en JavaScript, siguiendo el curso de "Asincronismo con JavaScript" de Platzi.  
 
 Este repo está separado por dos carpetas pruincipales, una llamada "teorico" y otra "practica", ya que este curso se desarrolla tanto teorica como practicamente.
 
-##Teorico
+## Teorico
 
 Dentro de la carpeta 'src' van a estar separadas por carpetas los diferentes temas tratados.
 
-####Callback 
+#### Callback 
 Los callback son funciones que reciben por parametro otras funciones, por ejemplo:
 
 ```
@@ -23,9 +23,9 @@ function mostrarSaludo(callback) {
 ```
 
 Dentro de los callbacks también están los metodos cómo setTimeOut(), setInterval(), entre otros.
-(ver el archivo ./src/callbacks/main.js)
+(ver el archivo ./teorico/src/callbacks/main.js)
 
-###XMLHTTPRequest
+### XMLHTTPRequest
 Es un objeto de JS que permite hacer peticiones hacia servicios en la nube(URLs o APIs).
 
 Existen 5 estados en un llamado XMLHttpRequest:
@@ -45,9 +45,50 @@ xmlhttp.onreadystatechange → Un eventHandler que es llamado cuando la propieda
 xmlhttp.status → Retorna el estado de la respuesta de la petición. (200,400,500)
 xmlhttp.send() → Envía la petición.
 
+(ver el archivo ./teorico/src/callbacks/challenge.js)
+
+### Promesas
+Las promesas son asíncronas, por lo que el código continuará su ejecución normalmente y luego dirá si la promesa se resolvió o se rechazó. Por lo que varias promesas pueden llegar a entrar en ejecución al mismo tiempo.
+
+Las promesas pueden suceder:
+
+<ul>
+    <li>Ahora</li>
+    <li>En el futuro</li>
+    <li>Nunca</li>
+</ul>
+
+Las promes son constructores que reciben dos parametros; resolve y reject. Con resolve damos solucione a nuestra promesa, más que con reject manejamos los errores.
+
+Almacenamos nuestra promesa en una variable y luego damos solución a está usando los metodos then() y catch(), dependiendo si el resultado es positivo o negativo, y por ultimo usamos el metodo .finally() para decir que el proceso ha terminado
+
+Un ejemplo claro de esto es:
+
+```
+
+// numero de vacas
+const vacas = 5;
+
+const contarVacas = new Promise((resolve, reject) => {
+    // validando cuantas vacas hay
+    if (vacas > 10) {
+        resolve(`Tenemos ${vacas} vacas en la granja`); // resolviendola
+    } else {
+        reject('No tenemos más de 10 vacas en la granja'); // rechazandola
+    }
+})
+
+// en caso de ser positivo
+contarVacas.then(res => {
+    console.log(res);
+    // en caso de ser negativo
+}).catch(err => {
+    console.log(err);
+    // cuando el proceso haya terminado
+}).finally(() => {
+    console.log('Fin proceso');
+})
+```
 
 
-(ver el archivo ./src/callbacks/challenge.js)
-
-
-##Practico
+## Practico
