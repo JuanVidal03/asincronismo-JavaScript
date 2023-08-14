@@ -65,7 +65,6 @@ Almacenamos nuestra promesa en una variable y luego damos solución a está usan
 Un ejemplo claro de esto es:
 
 ```
-
 // numero de vacas
 const vacas = 5;
 
@@ -88,6 +87,48 @@ contarVacas.then(res => {
 }).finally(() => {
     console.log('Fin proceso');
 })
+```
+#### Fetch
+
+Otro ejemplo de promesas pero más aplicadas a la vida real es la forma de hacer peticiones http usando fetch.
+
+Por medio de Fetch se puede realizar peticiones HTTP asíncronas de JavaScript (JS) con promesas. La API Fetch proporciona una interfaz JS más cómoda para acceder y manipular; fetch() es un método global.
+
+Un ejemplo de una petición get a la API de platzi:
+
+```
+// url de la api a usar
+const API = 'https://api.escuelajs.co/api/v1';
+
+// función donde hago el fetch de la api
+function fetchData(urlApi) {
+  return fetch(urlApi);
+}
+
+// llamado de la función
+fetchData(`${API}/products`)
+  .then(res => res.json())
+  .then(products => {
+    // todos los productos
+    console.log('TODOS LOS PRODUCTOS')
+    console.log(products)
+    return fetchData(`${API}/products/${products[0].id}`) // solo el primer producto
+  })
+  .then(res => res.json())
+  .then(product => {
+    // primer producto
+    console.log('PRIMER PRODUCTO')
+    console.log(product)
+    return fetchData(`${API}/categories/${product.category.id}`) // categoria del primer producto
+  }) 
+  .then(res => res.json())
+  .then(product => {
+    // imprimiendo el primer producto
+    console.log('NOMBRE CATEGORIA')
+    console.log(product.name)
+  }) 
+  .catch(err => console.log(`Error al obtener un solo producto: ${err}`)) // manejo de errore
+  .finally(() =>  console.log('Fin de la petición')); // fin de la petición
 ```
 
 
