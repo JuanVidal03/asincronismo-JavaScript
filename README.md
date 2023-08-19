@@ -130,6 +130,101 @@ fetchData(`${API}/products`)
   .catch(err => console.log(`Error al obtener un solo producto: ${err}`)) // manejo de errore
   .finally(() =>  console.log('Fin de la petición')); // fin de la petición
 ```
+Para hacer peticiones tipo "POST" use usa la siguiente estructura:
 
+```
+// url de la API
+const API = 'https://api.escuelajs.co/api/v1';
+
+function postData(urlApi, data) {
+  // defiendo el metodo post para el envio
+  const response = fetch(urlApi, {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  return response;
+}
+
+const data = {
+  "title": "Oversize T-shirt",
+  "price": 59.99,
+  "description": "Beauty oversize t-shirt",
+  "categoryId": 1,
+  "images": ["https://images.pexels.com/photos/428340/pexels-photo-428340.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"]
+}
+
+postData(`${API}/products`, data)
+  .then(res => res.json())
+  .then(data => console.log(data))
+```
+
+#### Async / Await
+
+Esta es una manera de hacer peticiones http, viene con una de las ultimas versiones de ECMAScript, es muy eficiente a la hora de usarla, ya que con usar dos palabras reservadas del lenguaje se puede evitar hacer todo el proceso con fetch, aqui se muestra un ejemplo claro de cómo sería su uso:
+
+```
+// generando una promesa para luego llamarla desde una función asincrona
+const promiseFunction = () => {
+  
+  return new Promise((resolve, reject) => {
+    // operador ternario para dar solución a la promesa
+    (true)
+      ? setTimeout(() => resolve('Async!'), 3000)
+      : reject(new Error('Error!'))
+  })
+}
+
+// funcion asincrona
+const asyncFunction = async () => {
+  // llamando y haciendo una espera a la funcion
+  const functionResponse = await promiseFunction();
+  // mostrando el resultado
+  console.log(functionResponse);
+
+}
+
+asyncFunction();
+```
+
+Un ejemplo claro de como hacer peticiones tipo get usando try y catch para el manejo de errores es el siguiente: (cabe recalcar que try y catch se usa para manejar los errores de una manera ordenada en los procesos asincronos)
+
+```
+const API = 'https://api.escuelajs.co/api/v1'; // url de la api
+
+const fetchData = async(urlApi) => {
+  const response = await fetch(urlApi); // la respuesta de la API
+  const data = response.json(); // la convertirmos a un formato json
+
+  return data; // retornamos todos los productos
+}
+
+// mostrando los productos y sus variantes
+const showingProducts = async(urlApi) => {
+  // se usa try y catch para el manejoi de errore en las peticiones asincronas
+  try {
+    const products = await fetchData(`${urlApi}/products`); // todos los productos
+    console.log(products);
+    const product = await fetchData(`${urlApi}/products/${products[0].id}`); // oobteniendo un solo producto
+    console.log(product)
+    const categoria = await fetchData(`${urlApi}/categories/${product.category.id}`); // obteniendo la categoria
+    console.log(categoria);
+
+    // en caso de que ocurra un error
+  } catch (error) {
+    console.log(`Hubo un error al obtener la data: ${error}`);
+  }
+}
+
+
+showingProducts(API);
+```
+
+La anterior informacion y ejemplos están en la siguiente ruta: teorico/src/async
 
 ## Practico
